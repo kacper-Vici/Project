@@ -1,0 +1,285 @@
+================================================================================
+
+                    GIT CHEAT SHEET - PRACA W ZESPOLE (C++ / CLion)
+
+================================================================================
+
+
+
+--------------------------------------------------------------------------------
+
+1. ROLA PROGRAMISTY (Codzienna praca na własnej gałęzi)
+
+--------------------------------------------------------------------------------
+
+
+
+[KROK 1] ROZPOCZĘCIE NOWEGO ZADANIA
+
+Przed rozpoczęciem pisania kodu zawsze pobierz najnowszą wersję i stwórz nową gałąź.
+
+NIGDY nie pisz kodu bezpośrednio na gałęzi 'main'.
+
+
+
+  1. Przełączenie na główną gałąź:
+
+     git checkout main
+
+
+
+  2. Pobranie najświeższych zmian z serwera:
+
+     git pull origin main
+
+
+
+  3. Utworzenie nowej gałęzi i przełączenie się na nią:
+
+     git checkout -b feature/nazwa-zadania
+
+
+
+
+
+[KROK 2] ZAPISYWANIE POSTĘPÓW W TRAKCIE PRACY
+
+Rób to regularnie po ukończeniu małej, działającej części kodu.
+
+
+
+  1. Sprawdzenie zmodyfikowanych plików (opcjonalnie):
+
+     git status
+
+
+
+  2. Przygotowanie plików do zapisu:
+
+     git add .
+
+
+
+  3. Zapisanie migawki kodu z jasnym opisem:
+
+     git commit -m "Opis wykonanych zmian"
+
+
+
+
+
+[KROK 3] WYSYŁANIE ZMIAN NA GITHUBA
+
+Gdy zadanie na gałęzi jest ukończone i przetestowane.
+
+
+
+  1. Wysłanie nowej gałęzi (flaga -u potrzebna tylko za pierwszym razem):
+
+     git push -u origin feature/nazwa-zadania
+
+
+
+  2. Wysłanie kolejnych commitów na tej samej gałęzi:
+
+     git push
+
+
+
+
+
+[KROK AUX] AKTUALIZACJA WŁASNEJ GAŁĘZI (Gdy praca trwa dłużej niż 1 dzień)
+
+Jeśli projekt został  międzyczasie scalony zmiany innych osób do main:
+
+
+
+  1. Pobranie informacji z serwera:
+
+     git fetch origin
+
+
+
+  2. Dociągnięcie zmian z main do Twojej gałęzi:
+
+     git merge origin/main
+
+
+
+
+
+[AWARYJNE] ANULOWANIE ZMIAN LOKALNYCH
+
+Gdy napisałeś kod, który nie działa i chcesz wrócić do stanu z ostatniego commita:
+
+     git restore .
+
+
+
+
+
+--------------------------------------------------------------------------------
+
+2. ROLA ADMINA / LEAD (Zarządzanie projektem i scalanie)
+
+--------------------------------------------------------------------------------
+
+
+
+[KROK 1] PRZEGLĄD SYTUACJI W REPOZYTORIUM
+
+  1. Pobranie najnowszych danych o gałęziach z GitHuba:
+
+     git fetch --all
+
+
+
+  2. Wyświetlenie listy wszystkich gałęzi (lokalnych i zdalnych):
+
+     git branch -a
+
+
+
+
+
+[KROK 2] PRZEGLĄDANIE KODU KOLEGI (Lokalnie przed scaleniem)
+
+  1. Przełączenie się na gałąź napisaną przez inną osobę:
+
+     git checkout feature/nazwa-zadania-kolegi
+
+
+
+  2. Powrót na main po przetestowaniu:
+
+     git checkout main
+
+
+
+
+
+[KROK 3] SCALANIE PRACY ZESPOŁU DO MAIN (Z poziomu terminala)
+
+  1. Przejdź na main i upewnij się, że jest aktualny:
+
+     git checkout main
+
+     git pull origin main
+
+
+
+  2. Scal gałąź kolegi do main:
+
+     git merge feature/nazwa-zadania-kolegi
+
+
+
+  3. Wyślij scalony main na serwer:
+
+     git push origin main
+
+
+
+  *(Uwaga: Scalanie najwygodniej wykonywać przyciskiem Merge na GitHubie przez Pull Request)*
+
+
+
+
+
+[KROK 4] CZYSZCZENIE STARYCH GAŁĘZI
+
+Gdy kod z danej gałęzi trafił już bezpiecznie do main:
+
+
+
+  1. Usunięcie gałęzi z GitHuba:
+
+     git push origin --delete feature/nazwa-zadania-kolegi
+
+
+
+  2. Usunięcie gałęzi lokalnie:
+
+     git branch -d feature/nazwa-zadania-kolegi
+
+
+
+
+
+[AWARYJNE] ANULOWANIE LOKALNEGO MERGE'A
+
+Gdy podczas scalania pojawi się trudny konflikt:
+
+     git merge --abort
+
+
+
+
+
+--------------------------------------------------------------------------------
+
+3. WIZUALIZACJA HISTORII I DIAGNOSTYKA
+
+--------------------------------------------------------------------------------
+
+
+
+  Podgląd graficznej drzewiastej historii wszystkich commitów i rozgałęzień:
+
+  git log --oneline --graph --all
+
+
+
+
+
+--------------------------------------------------------------------------------
+
+4. PRZYKŁADOWY SCHEMAT PRACY KROK PO KROKU
+
+--------------------------------------------------------------------------------
+
+
+
+1. Programista: git checkout main && git pull origin main
+
+   (Pobranie najświeższego kodu z serwera)
+
+
+
+2. Programista: git checkout -b feature/moje-zadanie
+
+   (Stworzenie osobnej gałęzi do pracy)
+
+
+
+3. Programista: (Pisanie kodu...)
+
+
+
+4. Programista: git add . && git commit -m "Dodano logowanie"
+
+   (Zapisanie postępów lokalnie)
+
+
+
+5. Programista: git push -u origin feature/moje-zadanie
+
+   (Wysłanie zrealizowanego zadania na GitHuba)
+
+
+
+6. Admin / GitHub: Utworzenie & zatwierdzenie Pull Request (Merge do main)
+
+   (Włączenie nowego kodu do głównej gałęzi)
+
+
+
+7. Admin: git push origin --delete feature/moje-zadanie
+
+   (Usunięcie niepotrzebnej już gałęzi zadania)
+
+
+
+8. Wszyscy: git checkout main && git pull origin main
+
+   (Pobranie przez resztę zespołu zaktualizowanego kodu)
